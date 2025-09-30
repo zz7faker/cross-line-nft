@@ -16,3 +16,7 @@ npx hardhat node
 npx hardhat ignition deploy ./ignition/modules/Lock.js
 ```
 >>>>>>> 884c472 (finish local test and function)
+
+hardhat 本地网测试
+![alt text](image.png)
+
