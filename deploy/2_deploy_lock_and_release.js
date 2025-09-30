@@ -1,13 +1,24 @@
+const { network } = require("hardhat")
+const {developmentsChains, networkConfig} = require("../helper-hardhat-config")
+
 module.exports = async({getNamedAccounts , deployments}) => {
     const {firstAccount} = await getNamedAccounts()
     const {deploy , log} = deployments
 
-    const ccipSimulatorDeployment = await deployments.get("CCIPLocalSimulator")
-    const ccipSimulator = await ethers.getContractAt("CCIPLocalSimulator" , ccipSimulatorDeployment.address)
-    const ccipConfig = await ccipSimulator.configuration()
+    let sourceChainRouter
+    let linkTokenAddr
 
-    const sourceChainRouter = ccipConfig.sourceRouter_
-    const linkTokenAddr = ccipConfig.linkToken_
+    if(developmentsChains.includes(network.name)) {
+        const ccipSimulatorDeployment = await deployments.get("CCIPLocalSimulator")
+        const ccipSimulator = await ethers.getContractAt("CCIPLocalSimulator" , ccipSimulatorDeployment.address)
+        const ccipConfig = await ccipSimulator.configuration()
+        sourceChainRouter = ccipConfig.sourceRouter_
+        linkTokenAddr = ccipConfig.linkToken_
+    } else {
+        sourceChainRouter = networkConfig[network.config.chainId].router
+        linkTokenAddr =  networkConfig[network.config.chainId].linkToken
+    }
+
     const nftDeployment = await deployments.get("MyToken")
     const nftAddr = nftDeployment.address
 
