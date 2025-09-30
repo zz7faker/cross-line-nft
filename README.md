@@ -20,3 +20,15 @@ npx hardhat ignition deploy ./ignition/modules/Lock.js
 hardhat 本地网测试
 ![alt text](image.png)
 
+sepolia and amoy
+lock and cross:
+npx hardhat check-nft --network sepolia：
+![alt text](image-3.png)
+npx hardhat check-wnft --network amoy：
+![alt text](image-4.png)
+
+burn and cross:
+npx hardhat check-nft --network sepolia：
+![alt text](image-1.png)
+npx hardhat check-wnft --network amoy：
+![alt text](image-2.png)
